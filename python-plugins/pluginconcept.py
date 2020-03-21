@@ -14,11 +14,31 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import json
 
-# plotter impores
+# plotter imports
+import readers
+
+
 
 def read_data(file_path):
-    """Read CSV data and return Pandas DataFrame """
+    """Read data and return Pandas DataFrame """
+    format = file_path.suffix.lstrip(".")
+    return readers.read(format, file_path)
+
+    """
+    func = getattr(readers, format) # gets the function object from another function
+    return func(file_path) # passes the argument to the retrieved function
+    
+ 
+    if format == 'csv':
+        return pd.read_csv(file_path)
+    elif format == "json":
+        json_dict = json.loads(file_path.read_text())
+        return pd.DataFrame(json_dict)
+    else:
+        raise TypeError(f"{format} not supported")
+
     return pd.read_csv(file_path)
+    """
 
 def creat_plot(data):
     """Plot the data input"""
